@@ -34,7 +34,6 @@ It’s primarily intended for:
 | Custom username / roles / groups | Controlled via `--username`, `--roles`, or `--user-data` |
 | Configurable ticket lifetime | `--lifetime-hours` sets the internal expiration checked by the server |
 | Optional `Set-Cookie` output | Generates a ready-to-paste `Set-Cookie` header |
-| Safety gate | Refuses to print cookie material unless `--i-know-what-im-doing` is set |
 | Dry-run mode | Validates key and data handling without emitting secrets |
 | Cross-platform | Pure Python 3.9+, no .NET dependency |
 
@@ -64,17 +63,16 @@ chmod +x aspxauth_forge.py
 ### Common optional arguments
 
 | Option | Purpose |
-|---------|----------|
+|-------|---------|
 | `--roles "Admin,Users"` | Add comma-separated roles (translated into `userData`) |
-| `--user-data "role=admin|dept=it"` | Provide raw `userData` string (overrides `--roles`) |
+| `--user-data "role=admin\|dept=it"` | Provide raw `userData` string (overrides `--roles`) |
 | `--lifetime-hours 4` | Ticket validity period (server-side) |
 | `--persistent` | Marks ticket as persistent (browser hint only) |
-| `--out base64|hex|both` | Output format (default `base64`) |
+| `--out base64` (or `hex`, `both`) | Output format (default `base64`) |
 | `--set-cookie` | Print a `Set-Cookie` header (ready for browser/proxy injection) |
 | `--cookie-name .ASPXAUTH` | Change cookie name |
 | `--cookie-domain example.com` | Add a Domain attribute |
 | `--cookie-expires-hours 12` | Make the browser cookie persistent (client-side only) |
-| `--i-know-what-im-doing` | Required to actually print the cookie material |
 | `--dry-run` | Validate and exit without output |
 
 ---
@@ -88,8 +86,7 @@ python aspxauth_forge.py \
   --validation-key EBF9076B4E3026BE6E3AD58FB72FF9FAD5F7134B42AC73822C5F3EE159F20214B73A80016F9DDB56BD194C268870845F7A60B39DEF96B553A022F1BA56A18B80 \
   --roles "Web Users" \
   --lifetime-hours 2 \
-  --set-cookie \
-  --i-know-what-im-doing
+  --set-cookie
 ```
 
 ### Example 2 – Custom `userData`
@@ -100,8 +97,7 @@ python aspxauth_forge.py \
   --user-data "role=admin|domain=acme" \
   --decryption-key <HEX_DEC_KEY> \
   --validation-key <HEX_VAL_KEY> \
-  --out both \
-  --i-know-what-im-doing
+  --out both
 ```
 
 ---
@@ -124,7 +120,7 @@ python aspxauth_forge.py \
 2. Open **Application → Storage → Cookies**.  
 3. Add a cookie:
    - **Name:** `.ASPXAUTH`
-   - **Value:** Base64 output from the tool  
+   - **Value:** Hex output from the tool  
    - **Path:** `/`
    - **Secure:** check if HTTPS  
    - **HttpOnly:** usually checked  
